@@ -23,6 +23,15 @@
         <parameter key="oauth2.server.config" type="collection" />
     </parameters>
     <services>
+        <service id="OAuth2\ServerBundle\Controller\AuthorizeController" public="true">
+            <tag name="controller.service_arguments"/>
+        </service>
+        <service id="OAuth2\ServerBundle\Controller\TokenController" public="true">
+            <tag name="controller.service_arguments"/>
+        </service>
+        <service id="OAuth2\ServerBundle\Controller\VerifyController" public="true">
+            <tag name="controller.service_arguments"/>
+        </service>
         <service id="oauth2.server" class="%oauth2.server.class%">
             <argument type="collection">
                 <argument key="client_credentials" type="service" id="oauth2.storage.client_credentials" />
