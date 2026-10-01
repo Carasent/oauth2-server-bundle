@@ -6,7 +6,7 @@ use OAuth2\HttpFoundationBridge\Request;
 use OAuth2\ServerBundle\Tests\ContainerLoader;
 use OAuth2\ServerBundle\Controller\AuthorizeController;
 
-class AuthorizeControllerTest extends \PHPUnit_Framework_TestCase
+class AuthorizeControllerTest extends \PHPUnit\Framework\TestCase
 {
     public function testOpenIdConfig()
     {

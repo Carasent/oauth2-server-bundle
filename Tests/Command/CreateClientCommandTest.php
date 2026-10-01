@@ -7,7 +7,7 @@ use OAuth2\ServerBundle\Command\CreateClientCommand;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class CreateClientCommandTest extends \PHPUnit_Framework_TestCase
+class CreateClientCommandTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateClientWithInvalidScope()
     {
