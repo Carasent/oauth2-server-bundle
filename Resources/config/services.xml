@@ -91,9 +91,11 @@
             <argument type="service" id="oauth2.scope_manager"/>
         </service>
         <service id="oauth2.command.create_scope" class="OAuth2\ServerBundle\Command\CreateScopeCommand">
+            <argument type="service" id="oauth2.scope_manager"/>
             <tag name="console.command"/>
         </service>
         <service id="oauth2.command.create_client" class="OAuth2\ServerBundle\Command\CreateClientCommand">
+            <argument type="service" id="oauth2.client_manager"/>
             <tag name="console.command"/>
         </service>
     </services>
