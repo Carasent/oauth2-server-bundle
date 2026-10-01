@@ -57,6 +57,8 @@ class AuthorizationCode implements AuthorizationCodeInterface
             'redirect_uri' => implode(' ', $code->getRedirectUri()),
             'scope' => $code->getScope(),
             'id_token' => $code->getIdToken(),
+            'code_challenge' => $code->getCodeChallenge(),
+            'code_challenge_method' => $code->getCodeChallengeMethod(),
         );
     }
 
@@ -91,7 +93,7 @@ class AuthorizationCode implements AuthorizationCodeInterface
      * @return void
      * @throws \Exception
      */
-    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null, $id_token = null)
+    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null, $id_token = null, $code_challenge = null, $code_challenge_method = null)
     {
         $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
 
@@ -107,6 +109,8 @@ class AuthorizationCode implements AuthorizationCodeInterface
         $authorizationCode->setRedirectUri($redirect_uri);
         $authorizationCode->setExpires($expires);
         $authorizationCode->setScope($scope);
+        $authorizationCode->setCodeChallenge($code_challenge);
+        $authorizationCode->setCodeChallengeMethod($code_challenge_method);
 
         if ($id_token) {
           $authorizationCode->setIdToken($id_token);

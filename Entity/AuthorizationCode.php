@@ -43,6 +43,16 @@ class AuthorizationCode
     private $id_token;
 
     /**
+     * @var string
+     */
+    private $code_challenge;
+
+    /**
+     * @var string
+     */
+    private $code_challenge_method;
+
+    /**
      * Set code
      *
      * @param  string            $code
@@ -201,5 +211,45 @@ class AuthorizationCode
     public function setIdToken($idToken)
     {
       $this->id_token = $idToken;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCodeChallenge()
+    {
+        return $this->code_challenge;
+    }
+
+    /**
+     * @param string|null $codeChallenge
+     *
+     * @return AuthorizationCode
+     */
+    public function setCodeChallenge($codeChallenge)
+    {
+        $this->code_challenge = $codeChallenge;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCodeChallengeMethod()
+    {
+        return $this->code_challenge_method;
+    }
+
+    /**
+     * @param string|null $codeChallengeMethod
+     *
+     * @return AuthorizationCode
+     */
+    public function setCodeChallengeMethod($codeChallengeMethod)
+    {
+        $this->code_challenge_method = $codeChallengeMethod;
+
+        return $this;
     }
 }
