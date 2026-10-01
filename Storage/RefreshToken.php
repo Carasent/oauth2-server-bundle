@@ -39,7 +39,7 @@ class RefreshToken implements RefreshTokenInterface
      */
     public function getRefreshToken($refresh_token)
     {
-        $refreshToken = $this->em->getRepository('OAuth2ServerBundle:RefreshToken')->find($refresh_token);
+        $refreshToken = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\RefreshToken')->find($refresh_token);
 
         if (!$refreshToken) {
             return null;
@@ -84,7 +84,7 @@ class RefreshToken implements RefreshTokenInterface
     public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = null)
     {
         // Get Client Entity
-        $client = $this->em->getRepository('OAuth2ServerBundle:Client')->find($client_id);
+        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
         if (!$client) {
             return null;
         }
@@ -120,7 +120,7 @@ class RefreshToken implements RefreshTokenInterface
      */
     public function unsetRefreshToken($refresh_token)
     {
-        $refreshToken = $this->em->getRepository('OAuth2ServerBundle:RefreshToken')->find($refresh_token);
+        $refreshToken = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\RefreshToken')->find($refresh_token);
         $this->em->remove($refreshToken);
         $this->em->flush();
     }

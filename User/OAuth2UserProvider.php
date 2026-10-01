@@ -37,7 +37,7 @@ class OAuth2UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->em->getRepository('OAuth2ServerBundle:User')->find($username);
+        $user = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\User')->find($username);
 
         if (!$user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" not found.', $username));

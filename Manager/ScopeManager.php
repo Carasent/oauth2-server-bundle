@@ -47,7 +47,7 @@ class ScopeManager implements ScopeManagerInterface
      */
     public function findScopeByScope($scope)
     {
-        $scopeObject = $this->em->getRepository('OAuth2ServerBundle:Scope')->find($scope);
+        $scopeObject = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Scope')->find($scope);
 
         return $scopeObject;
     }
@@ -60,7 +60,7 @@ class ScopeManager implements ScopeManagerInterface
      */
     public function findScopesByScopes(array $scopes)
     {
-        $scopeObjects = $this->em->getRepository('OAuth2ServerBundle:Scope')
+        $scopeObjects = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Scope')
             ->createQueryBuilder('a')
             ->where('a.scope in (?1)')
             ->setParameter(1, $scopes)
