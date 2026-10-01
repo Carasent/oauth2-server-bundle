@@ -2,10 +2,10 @@
 
 namespace OAuth2\ServerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class TokenController extends Controller
+class TokenController extends AbstractController
 {
     /**
      * This is called by the client app once the client has obtained
