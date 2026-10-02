@@ -26,8 +26,7 @@ class AuthorizationCode implements AuthorizationCodeInterface
      * @param $code
      * Authorization code to be check with.
      *
-     * @return
-     * An associative array as below, and NULL if the code is invalid
+     * Returns an associative array, or null when the code is invalid.
      * @code
      * return array(
      *     "client_id"    => CLIENT_ID,      // REQUIRED Stored client identifier
@@ -92,7 +91,6 @@ class AuthorizationCode implements AuthorizationCodeInterface
      *
      * @ingroup oauth2_section_4
      *
-     * @return void
      * @throws \Exception
      */
     public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null, $id_token = null, $code_challenge = null, $code_challenge_method = null): void

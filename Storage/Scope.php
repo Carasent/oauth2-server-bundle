@@ -30,8 +30,7 @@ class Scope implements ScopeInterface
      * @param $client_id
      * The requesting client.
      *
-     * @return
-     * TRUE if it exists, FALSE otherwise.
+     * Returns true when every requested scope exists.
      */
     public function scopeExists($scope, $client_id = null): bool
     {
@@ -67,10 +66,8 @@ class Scope implements ScopeInterface
      * scope request by the client. By returning "null",
      * opt out of requiring scopes
      *
-     * @return
-     * string representation of default scope, null if
-     * scopes are not defined, or false to force scope
-     * request by the client
+     * Returns a string default scope, null when scopes are not defined, or
+     * false to force a scope request by the client.
      *
      * ex:
      *     'default'
@@ -86,8 +83,8 @@ class Scope implements ScopeInterface
      * Gets the description of a given scope key, if
      * available, otherwise the key is returned.
      *
-     * @return
-     * string description of the scope key.
+     * Returns the scope description, or the supplied scope key when no
+     * description exists.
      */
     public function getDescriptionForScope($scope): ?string
     {

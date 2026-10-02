@@ -24,9 +24,8 @@ class AccessToken implements AccessTokenInterface
      * @param $oauth_token
      * oauth_token to be check with.
      *
-     * @return
-     * An associative array as below, and return NULL if the supplied oauth_token
-     * is invalid:
+     * Returns an associative array, or null when the supplied oauth token is
+     * invalid:
      * - client_id: Stored client identifier.
      * - expires: Stored expiration in unix timestamp.
      * - scope: (optional) Stored scope values in space-separated string.

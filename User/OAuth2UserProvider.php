@@ -28,8 +28,6 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @param string $username The username
      *
-     * @return UserInterface
-     *
      * @see UsernameNotFoundException
      *
      * @throws UsernameNotFoundException if the user is not found
@@ -55,8 +53,6 @@ class OAuth2UserProvider implements UserProviderInterface
      * map.
      * @param UserInterface $user
      *
-     * @return UserInterface
-     *
      * @throws UnsupportedUserException if the account is not supported
      */
     public function refreshUser(UserInterface $user): UserInterface
@@ -73,7 +69,6 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @param string $class
      *
-     * @return Boolean
      */
     public function supportsClass($class): bool
     {
@@ -95,7 +90,6 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @param array $scopes
      *
-     * @return UserInterface
      */
     public function createUser($username, $password, array $roles = array(), array $scopes = array()): UserInterface
     {
@@ -121,7 +115,6 @@ class OAuth2UserProvider implements UserProviderInterface
     /**
      * Creates a salt for password hashing
      *
-     * @return A salt
      */
     protected function generateSalt(): string
     {

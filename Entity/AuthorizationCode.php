@@ -214,7 +214,7 @@ class AuthorizationCode
     }
 
     /**
-     * @return string|null
+     * Gets the PKCE code challenge.
      */
     public function getCodeChallenge(): ?string
     {
@@ -224,9 +224,8 @@ class AuthorizationCode
     /**
      * @param string|null $codeChallenge
      *
-     * @return AuthorizationCode
      */
-    public function setCodeChallenge($codeChallenge): self
+    public function setCodeChallenge(?string $codeChallenge): self
     {
         $this->code_challenge = $codeChallenge;
 
@@ -234,7 +233,7 @@ class AuthorizationCode
     }
 
     /**
-     * @return string|null
+     * Gets the PKCE code challenge method.
      */
     public function getCodeChallengeMethod(): ?string
     {
@@ -244,9 +243,8 @@ class AuthorizationCode
     /**
      * @param string|null $codeChallengeMethod
      *
-     * @return AuthorizationCode
      */
-    public function setCodeChallengeMethod($codeChallengeMethod): self
+    public function setCodeChallengeMethod(?string $codeChallengeMethod): self
     {
         $this->code_challenge_method = $codeChallengeMethod;
 

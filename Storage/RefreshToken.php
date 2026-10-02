@@ -26,8 +26,7 @@ class RefreshToken implements RefreshTokenInterface
      * @param $refresh_token
      * Refresh token to be check with.
      *
-     * @return
-     * An associative array as below, and NULL if the refresh_token is
+     * Returns an associative array, or null when the refresh token is
      * invalid:
      * - refresh_token: Stored refresh token identifier.
      * - client_id: Stored client identifier.

@@ -23,8 +23,7 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $client_secret
      * (optional) If a secret is required, check that they've given the right one.
      *
-     * @return
-     * TRUE if the client credentials are valid, and MUST return FALSE if it isn't.
+     * Returns true when the client credentials are valid.
      * @endcode
      *
      * @see http://tools.ietf.org/html/rfc6749#section-3.1
@@ -53,10 +52,9 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $client_id
      * Client identifier to be check with.
      *
-     * @return array
-     *               Client details. The only mandatory key in the array is "redirect_uri".
-     *               This function MUST return FALSE if the given client does not exist or is
-     *               invalid. "redirect_uri" can be space-delimited to allow for multiple valid uris.
+     * Client details. The only mandatory key in the array is "redirect_uri".
+     * Returns false if the given client does not exist or is invalid.
+     * "redirect_uri" can be space-delimited to allow for multiple valid URIs.
      * @code
      *               return array(
      *               "redirect_uri" => REDIRECT_URI,      // REQUIRED redirect_uri registered for the client
@@ -94,9 +92,7 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $grant_type
      * Grant type to be check with
      *
-     * @return
-     * TRUE if the grant type is supported by this client identifier, and
-     * FALSE if it isn't.
+     * Returns true when the grant type is supported by this client.
      *
      * @ingroup oauth2_section_4
      */
@@ -126,8 +122,7 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $client_id
      * Client identifier to be check with.
      *
-     * @return
-     * TRUE if the client is public, and FALSE if it isn't.
+     * Returns true when the client is public.
      * @endcode
      *
      * @see http://tools.ietf.org/html/rfc6749#section-2.3
@@ -151,8 +146,7 @@ class ClientCredentials implements ClientCredentialsInterface
     /**
      * Get the scope associated with this client
      *
-     * @return
-     * STRING the space-delineated scope list for the specified client_id
+     * Returns false when the client does not exist.
      */
     public function getClientScope($client_id): string|false
     {
