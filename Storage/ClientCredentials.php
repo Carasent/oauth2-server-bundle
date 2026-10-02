@@ -34,7 +34,7 @@ class ClientCredentials implements ClientCredentialsInterface
     public function checkClientCredentials($client_id, $client_secret = null): bool
     {
         // Get Client
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         // If client exists check secret
         if ($client) {
@@ -70,7 +70,7 @@ class ClientCredentials implements ClientCredentialsInterface
     public function getClientDetails($client_id): array|false
     {
         // Get Client
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
             return false;
@@ -137,7 +137,7 @@ class ClientCredentials implements ClientCredentialsInterface
      */
     public function isPublicClient($client_id): bool
     {
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
             return false;
@@ -157,7 +157,7 @@ class ClientCredentials implements ClientCredentialsInterface
     public function getClientScope($client_id): string|false
     {
         // Get Client
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
             return false;

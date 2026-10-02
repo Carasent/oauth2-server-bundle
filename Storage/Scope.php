@@ -3,6 +3,7 @@
 namespace OAuth2\ServerBundle\Storage;
 
 use OAuth2\Storage\ScopeInterface;
+use OAuth2\ServerBundle\Entity\Client;
 use OAuth2\ServerBundle\Manager\ScopeManagerInterface;
 use Doctrine\ORM\EntityManager;
 
@@ -37,7 +38,7 @@ class Scope implements ScopeInterface
         $scopes = explode(' ', $scope);
         if ($client_id) {
             // Get Client
-            $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+            $client = $this->em->getRepository(Client::class)->find($client_id);
 
             if (!$client) {
                 return false;
@@ -76,7 +77,7 @@ class Scope implements ScopeInterface
      * ex:
      *     null
      */
-    public function getDefaultScope($client_id = null): false
+    public function getDefaultScope($client_id = null): string|false|null
     {
         return false;
     }
