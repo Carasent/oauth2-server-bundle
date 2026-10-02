@@ -216,7 +216,7 @@ class AuthorizationCode
     /**
      * @return string|null
      */
-    public function getCodeChallenge()
+    public function getCodeChallenge(): ?string
     {
         return $this->code_challenge;
     }
@@ -226,7 +226,7 @@ class AuthorizationCode
      *
      * @return AuthorizationCode
      */
-    public function setCodeChallenge($codeChallenge)
+    public function setCodeChallenge($codeChallenge): self
     {
         $this->code_challenge = $codeChallenge;
 
@@ -236,7 +236,7 @@ class AuthorizationCode
     /**
      * @return string|null
      */
-    public function getCodeChallengeMethod()
+    public function getCodeChallengeMethod(): ?string
     {
         return $this->code_challenge_method;
     }
@@ -246,7 +246,7 @@ class AuthorizationCode
      *
      * @return AuthorizationCode
      */
-    public function setCodeChallengeMethod($codeChallengeMethod)
+    public function setCodeChallengeMethod($codeChallengeMethod): self
     {
         $this->code_challenge_method = $codeChallengeMethod;
 

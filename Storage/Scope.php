@@ -32,7 +32,7 @@ class Scope implements ScopeInterface
      * @return
      * TRUE if it exists, FALSE otherwise.
      */
-    public function scopeExists($scope, $client_id = null)
+    public function scopeExists($scope, $client_id = null): bool
     {
         $scopes = explode(' ', $scope);
         if ($client_id) {
@@ -76,7 +76,7 @@ class Scope implements ScopeInterface
      * ex:
      *     null
      */
-    public function getDefaultScope($client_id = null)
+    public function getDefaultScope($client_id = null): false
     {
         return false;
     }
@@ -88,7 +88,7 @@ class Scope implements ScopeInterface
      * @return
      * string description of the scope key.
      */
-    public function getDescriptionForScope($scope)
+    public function getDescriptionForScope($scope): ?string
     {
         // Get Scope
         $scopeObject = $this->sm->findScopeByScope($scope);

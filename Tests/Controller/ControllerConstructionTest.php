@@ -9,7 +9,7 @@ use OAuth2\ServerBundle\Tests\ContainerLoader;
 
 class ControllerConstructionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTokenControllerCanBeConstructedWithContainerServices()
+    public function testTokenControllerCanBeConstructedWithContainerServices(): void
     {
         $container = ContainerLoader::buildTestContainer();
 
@@ -26,7 +26,7 @@ class ControllerConstructionTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(TokenController::class, $controller);
     }
 
-    public function testVerifyControllerCanBeConstructedWithContainerServices()
+    public function testVerifyControllerCanBeConstructedWithContainerServices(): void
     {
         $container = ContainerLoader::buildTestContainer();
 

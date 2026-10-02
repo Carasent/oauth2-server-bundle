@@ -35,7 +35,7 @@ class OAuth2UserProvider implements UserProviderInterface
      * @throws UsernameNotFoundException if the user is not found
      *
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): UserInterface
     {
         $user = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\User')->find($username);
 
@@ -59,7 +59,7 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @throws UnsupportedUserException if the account is not supported
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof OAuth2UserInterface) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
@@ -75,7 +75,7 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @return Boolean
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         if ($class == 'OAuth2UserInterface') {
             return true;
@@ -97,7 +97,7 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @return UserInterface
      */
-    public function createUser($username, $password, array $roles = array(), array $scopes = array())
+    public function createUser($username, $password, array $roles = array(), array $scopes = array()): UserInterface
     {
         $user = new \OAuth2\ServerBundle\Entity\User();
         $user->setUsername($username);
@@ -123,7 +123,7 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @return A salt
      */
-    protected function generateSalt()
+    protected function generateSalt(): string
     {
         return base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }

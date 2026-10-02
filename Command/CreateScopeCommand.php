@@ -19,7 +19,7 @@ class CreateScopeCommand extends Command
         $this->scopeManager = $scopeManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('OAuth2:CreateScope')

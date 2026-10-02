@@ -2,6 +2,9 @@
 
 namespace OAuth2\ServerBundle\Controller;
 
+use OAuth2\HttpFoundationBridge\Request;
+use OAuth2\HttpFoundationBridge\Response;
+use OAuth2\Server;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -12,9 +15,9 @@ class VerifyController
     private $response;
 
     public function __construct(
-        \OAuth2\Server $server,
-        \OAuth2\HttpFoundationBridge\Request $request,
-        \OAuth2\HttpFoundationBridge\Response $response
+        Server $server,
+        Request $request,
+        Response $response
     ) {
         $this->server = $server;
         $this->request = $request;
@@ -28,7 +31,7 @@ class VerifyController
      *
      * @Route("/verify", name="_verify_token")
      */
-    public function verifyAction()
+    public function verifyAction(): JsonResponse|Response
     {
         if (!$this->server->verifyResourceRequest($this->request, $this->response)) {
             return $this->server->getResponse();

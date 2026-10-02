@@ -31,7 +31,7 @@ class ClientCredentials implements ClientCredentialsInterface
      *
      * @ingroup oauth2_section_3
      */
-    public function checkClientCredentials($client_id, $client_secret = null)
+    public function checkClientCredentials($client_id, $client_secret = null): bool
     {
         // Get Client
         $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
@@ -67,7 +67,7 @@ class ClientCredentials implements ClientCredentialsInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function getClientDetails($client_id)
+    public function getClientDetails($client_id): array|false
     {
         // Get Client
         $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
@@ -100,7 +100,7 @@ class ClientCredentials implements ClientCredentialsInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function checkRestrictedGrantType($client_id, $grant_type)
+    public function checkRestrictedGrantType($client_id, $grant_type): bool
     {
         $client = $this->getClientDetails($client_id);
 
@@ -135,7 +135,7 @@ class ClientCredentials implements ClientCredentialsInterface
      *
      * @ingroup oauth2_section_2
      */
-    public function isPublicClient($client_id)
+    public function isPublicClient($client_id): bool
     {
         $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
 
@@ -154,7 +154,7 @@ class ClientCredentials implements ClientCredentialsInterface
      * @return
      * STRING the space-delineated scope list for the specified client_id
      */
-    public function getClientScope($client_id)
+    public function getClientScope($client_id): string|false
     {
         // Get Client
         $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);

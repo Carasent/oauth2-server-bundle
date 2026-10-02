@@ -2,6 +2,13 @@
 
 namespace OAuth2\ServerBundle\Controller;
 
+use OAuth2\GrantType\AuthorizationCode;
+use OAuth2\GrantType\ClientCredentials;
+use OAuth2\GrantType\RefreshToken;
+use OAuth2\GrantType\UserCredentials;
+use OAuth2\HttpFoundationBridge\Request;
+use OAuth2\HttpFoundationBridge\Response;
+use OAuth2\Server;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class TokenController
@@ -15,13 +22,13 @@ class TokenController
     private $response;
 
     public function __construct(
-        \OAuth2\Server $server,
-        \OAuth2\GrantType\ClientCredentials $clientCredentialsGrant,
-        \OAuth2\GrantType\AuthorizationCode $authorizationCodeGrant,
-        \OAuth2\GrantType\RefreshToken $refreshTokenGrant,
-        \OAuth2\GrantType\UserCredentials $userCredentialsGrant,
-        \OAuth2\HttpFoundationBridge\Request $request,
-        \OAuth2\HttpFoundationBridge\Response $response
+        Server $server,
+        ClientCredentials $clientCredentialsGrant,
+        AuthorizationCode $authorizationCodeGrant,
+        RefreshToken $refreshTokenGrant,
+        UserCredentials $userCredentialsGrant,
+        Request $request,
+        Response $response
     ) {
         $this->server = $server;
         $this->clientCredentialsGrant = $clientCredentialsGrant;
@@ -40,7 +47,7 @@ class TokenController
      *
      * @Route("/token", name="_token")
      */
-    public function tokenAction()
+    public function tokenAction(): Response
     {
         // Add Grant Types
         $this->server->addGrantType($this->clientCredentialsGrant);

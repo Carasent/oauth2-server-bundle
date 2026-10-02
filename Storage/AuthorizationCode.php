@@ -4,6 +4,7 @@ namespace OAuth2\ServerBundle\Storage;
 
 use OAuth2\Storage\AuthorizationCodeInterface;
 use Doctrine\ORM\EntityManager;
+use OAuth2\ServerBundle\Entity\AuthorizationCode as AuthorizationCodeEntity;
 use OAuth2\ServerBundle\Entity\Client;
 
 class AuthorizationCode implements AuthorizationCodeInterface
@@ -41,10 +42,10 @@ class AuthorizationCode implements AuthorizationCodeInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function getAuthorizationCode($code)
+    public function getAuthorizationCode($code): ?array
     {
         // Get Code
-        $code = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\AuthorizationCode')->find($code);
+        $code = $this->em->getRepository(AuthorizationCodeEntity::class)->find($code);
 
         if (!$code) {
             return null;
@@ -85,13 +86,13 @@ class AuthorizationCode implements AuthorizationCodeInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null)
+    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null): void
     {
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) throw new \Exception('Unknown client identifier');
 
-        $authorizationCode = new \OAuth2\ServerBundle\Entity\AuthorizationCode();
+        $authorizationCode = new AuthorizationCodeEntity();
         $authorizationCode->setCode($code);
         $authorizationCode->setClient($client);
         $authorizationCode->setUserId($user_id);
@@ -115,9 +116,9 @@ class AuthorizationCode implements AuthorizationCodeInterface
      *    that authorization code
      *
      */
-    public function expireAuthorizationCode($code)
+    public function expireAuthorizationCode($code): void
     {
-        $code = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\AuthorizationCode')->find($code);
+        $code = $this->em->getRepository(AuthorizationCodeEntity::class)->find($code);
         $this->em->remove($code);
         $this->em->flush();
     }

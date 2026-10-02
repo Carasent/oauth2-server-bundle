@@ -4,6 +4,8 @@ namespace OAuth2\ServerBundle\Storage;
 
 use OAuth2\Storage\RefreshTokenInterface;
 use Doctrine\ORM\EntityManager;
+use OAuth2\ServerBundle\Entity\Client;
+use OAuth2\ServerBundle\Entity\RefreshToken as RefreshTokenEntity;
 
 class RefreshToken implements RefreshTokenInterface
 {
@@ -37,9 +39,9 @@ class RefreshToken implements RefreshTokenInterface
      *
      * @ingroup oauth2_section_6
      */
-    public function getRefreshToken($refresh_token)
+    public function getRefreshToken($refresh_token): ?array
     {
-        $refreshToken = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\RefreshToken')->find($refresh_token);
+        $refreshToken = $this->em->getRepository(RefreshTokenEntity::class)->find($refresh_token);
 
         if (!$refreshToken) {
             return null;
@@ -81,16 +83,16 @@ class RefreshToken implements RefreshTokenInterface
      *
      * @ingroup oauth2_section_6
      */
-    public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = null)
+    public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = null): void
     {
         // Get Client Entity
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
         if (!$client) {
-            return null;
+            return;
         }
 
         // Create Refresh Token
-        $refreshToken = new \OAuth2\ServerBundle\Entity\RefreshToken();
+        $refreshToken = new RefreshTokenEntity();
         $refreshToken->setToken($refresh_token);
         $refreshToken->setClient($client);
         $refreshToken->setUserId($user_id);
@@ -118,9 +120,9 @@ class RefreshToken implements RefreshTokenInterface
      *
      * @ingroup oauth2_section_6
      */
-    public function unsetRefreshToken($refresh_token)
+    public function unsetRefreshToken($refresh_token): void
     {
-        $refreshToken = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\RefreshToken')->find($refresh_token);
+        $refreshToken = $this->em->getRepository(RefreshTokenEntity::class)->find($refresh_token);
         $this->em->remove($refreshToken);
         $this->em->flush();
     }

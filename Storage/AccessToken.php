@@ -4,6 +4,7 @@ namespace OAuth2\ServerBundle\Storage;
 
 use OAuth2\Storage\AccessTokenInterface;
 use Doctrine\ORM\EntityManager;
+use OAuth2\ServerBundle\Entity\AccessToken as AccessTokenEntity;
 use OAuth2\ServerBundle\Entity\Client;
 
 class AccessToken implements AccessTokenInterface
@@ -32,9 +33,9 @@ class AccessToken implements AccessTokenInterface
      *
      * @ingroup oauth2_section_7
      */
-    public function getAccessToken($oauth_token)
+    public function getAccessToken($oauth_token): ?array
     {
-        $accessToken = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\AccessToken')->find($oauth_token);
+        $accessToken = $this->em->getRepository(AccessTokenEntity::class)->find($oauth_token);
 
         if (!$accessToken) {
             return null;
@@ -69,17 +70,17 @@ class AccessToken implements AccessTokenInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function setAccessToken($oauth_token, $client_id, $user_id, $expires, $scope = null)
+    public function setAccessToken($oauth_token, $client_id, $user_id, $expires, $scope = null): void
     {
         // Get Client Entity
-        $client = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
-            return null;
+            return;
         }
 
         // Create Access Token
-        $accessToken = new \OAuth2\ServerBundle\Entity\AccessToken();
+        $accessToken = new AccessTokenEntity();
         $accessToken->setToken($oauth_token);
         $accessToken->setClient($client);
         $accessToken->setUserId($user_id);

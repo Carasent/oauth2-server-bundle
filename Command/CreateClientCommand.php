@@ -19,7 +19,7 @@ class CreateClientCommand extends Command
         $this->clientManager = $clientManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('OAuth2:CreateClient')
