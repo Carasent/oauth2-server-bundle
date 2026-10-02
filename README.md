@@ -45,6 +45,27 @@ Use composer to add the requirement and download it by running the command:
 $ php composer.phar require bshaffer/oauth2-server-bundle
 ```
 
+## Testing
+
+The bundle tests use an isolated PHP 8.2 and MySQL environment. It has a
+private Docker network, does not publish MySQL to the host, and therefore does
+not interact with Webdoc's containers or database.
+
+Run these commands from the bundle repository:
+
+```sh
+TEST_UID=$(id -u) TEST_GID=$(id -g) docker compose -p oauth2-server-bundle-test -f compose.test.yml run --rm composer
+TEST_UID=$(id -u) TEST_GID=$(id -g) docker compose -p oauth2-server-bundle-test -f compose.test.yml run --rm test
+```
+
+Run the second command after each change. The test command recreates its
+temporary database schema before executing PHPUnit. When finished, remove the
+test database container with:
+
+```sh
+docker compose -p oauth2-server-bundle-test -f compose.test.yml down
+```
+
 Composer will update your composer.json and install the bundle to your project's `vendor/bshaffer` directory.
 
 ### Step 2: Enable the bundle

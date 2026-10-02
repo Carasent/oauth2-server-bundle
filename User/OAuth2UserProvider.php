@@ -28,16 +28,14 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @param string $username The username
      *
-     * @return UserInterface
-     *
      * @see UsernameNotFoundException
      *
      * @throws UsernameNotFoundException if the user is not found
      *
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): UserInterface
     {
-        $user = $this->em->getRepository('OAuth2ServerBundle:User')->find($username);
+        $user = $this->em->getRepository('OAuth2\\ServerBundle\\Entity\\User')->find($username);
 
         if (!$user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" not found.', $username));
@@ -55,11 +53,9 @@ class OAuth2UserProvider implements UserProviderInterface
      * map.
      * @param UserInterface $user
      *
-     * @return UserInterface
-     *
      * @throws UnsupportedUserException if the account is not supported
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof OAuth2UserInterface) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
@@ -73,9 +69,8 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @param string $class
      *
-     * @return Boolean
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         if ($class == 'OAuth2UserInterface') {
             return true;
@@ -95,9 +90,8 @@ class OAuth2UserProvider implements UserProviderInterface
      *
      * @param array $scopes
      *
-     * @return UserInterface
      */
-    public function createUser($username, $password, array $roles = array(), array $scopes = array())
+    public function createUser($username, $password, array $roles = array(), array $scopes = array()): UserInterface
     {
         $user = new \OAuth2\ServerBundle\Entity\User();
         $user->setUsername($username);
@@ -121,9 +115,8 @@ class OAuth2UserProvider implements UserProviderInterface
     /**
      * Creates a salt for password hashing
      *
-     * @return A salt
      */
-    protected function generateSalt()
+    protected function generateSalt(): string
     {
         return base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }

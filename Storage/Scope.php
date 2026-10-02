@@ -3,6 +3,7 @@
 namespace OAuth2\ServerBundle\Storage;
 
 use OAuth2\Storage\ScopeInterface;
+use OAuth2\ServerBundle\Entity\Client;
 use OAuth2\ServerBundle\Manager\ScopeManagerInterface;
 use Doctrine\ORM\EntityManager;
 
@@ -29,15 +30,14 @@ class Scope implements ScopeInterface
      * @param $client_id
      * The requesting client.
      *
-     * @return
-     * TRUE if it exists, FALSE otherwise.
+     * Returns true when every requested scope exists.
      */
-    public function scopeExists($scope, $client_id = null)
+    public function scopeExists($scope, $client_id = null): bool
     {
         $scopes = explode(' ', $scope);
         if ($client_id) {
             // Get Client
-            $client = $this->em->getRepository('OAuth2ServerBundle:Client')->find($client_id);
+            $client = $this->em->getRepository(Client::class)->find($client_id);
 
             if (!$client) {
                 return false;
@@ -66,17 +66,15 @@ class Scope implements ScopeInterface
      * scope request by the client. By returning "null",
      * opt out of requiring scopes
      *
-     * @return
-     * string representation of default scope, null if
-     * scopes are not defined, or false to force scope
-     * request by the client
+     * Returns a string default scope, null when scopes are not defined, or
+     * false to force a scope request by the client.
      *
      * ex:
      *     'default'
      * ex:
      *     null
      */
-    public function getDefaultScope($client_id = null)
+    public function getDefaultScope($client_id = null): string|false|null
     {
         return false;
     }
@@ -85,10 +83,10 @@ class Scope implements ScopeInterface
      * Gets the description of a given scope key, if
      * available, otherwise the key is returned.
      *
-     * @return
-     * string description of the scope key.
+     * Returns the scope description, or the supplied scope key when no
+     * description exists.
      */
-    public function getDescriptionForScope($scope)
+    public function getDescriptionForScope($scope): ?string
     {
         // Get Scope
         $scopeObject = $this->sm->findScopeByScope($scope);

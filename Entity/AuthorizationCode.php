@@ -43,6 +43,16 @@ class AuthorizationCode
     private $id_token;
 
     /**
+     * @var string
+     */
+    private $code_challenge;
+
+    /**
+     * @var string
+     */
+    private $code_challenge_method;
+
+    /**
      * Set code
      *
      * @param  string            $code
@@ -201,5 +211,43 @@ class AuthorizationCode
     public function setIdToken($idToken)
     {
       $this->id_token = $idToken;
+    }
+
+    /**
+     * Gets the PKCE code challenge.
+     */
+    public function getCodeChallenge(): ?string
+    {
+        return $this->code_challenge;
+    }
+
+    /**
+     * @param string|null $codeChallenge
+     *
+     */
+    public function setCodeChallenge(?string $codeChallenge): self
+    {
+        $this->code_challenge = $codeChallenge;
+
+        return $this;
+    }
+
+    /**
+     * Gets the PKCE code challenge method.
+     */
+    public function getCodeChallengeMethod(): ?string
+    {
+        return $this->code_challenge_method;
+    }
+
+    /**
+     * @param string|null $codeChallengeMethod
+     *
+     */
+    public function setCodeChallengeMethod(?string $codeChallengeMethod): self
+    {
+        $this->code_challenge_method = $codeChallengeMethod;
+
+        return $this;
     }
 }

@@ -5,16 +5,14 @@ namespace OAuth2\ServerBundle\Tests\Controller;
 use OAuth2\HttpFoundationBridge\Request;
 use OAuth2\ServerBundle\Tests\ContainerLoader;
 use OAuth2\ServerBundle\Controller\AuthorizeController;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
-class AuthorizeControllerTest extends \PHPUnit_Framework_TestCase
+class AuthorizeControllerTest extends \PHPUnit\Framework\TestCase
 {
     public function testOpenIdConfig()
     {
-        $container = ContainerLoader::buildTestContainer(array(
-            __DIR__.'/../../vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/config/security.xml',
-        ));
-        $controller = new AuthorizeController();
-        $controller->setContainer($container);
+        $container = ContainerLoader::buildTestContainer();
 
         $clientManager = $container->get('oauth2.client_manager');
 
@@ -37,7 +35,12 @@ class AuthorizeControllerTest extends \PHPUnit_Framework_TestCase
             'foo'           => 'bar',
             'nonce'         => '123',
         ));
-        $container->set('oauth2.request', $request);
+        $controller = new AuthorizeController(
+            $container->get('oauth2.server'),
+            $request,
+            $container->get('oauth2.response'),
+            $container->get('oauth2.storage.scope')
+        );
 
         $params = $controller->validateAuthorizeAction();
 
@@ -45,11 +48,11 @@ class AuthorizeControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayNotHasKey('foo', $params['qs'], 'invalid included param');
         $this->assertArrayNotHasKey('redirect_uri', $params['qs'], 'optional excluded param');
 
-        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../../Resources/views');
-        $twig = new \Twig_Environment($loader);
-        $template = $twig->loadTemplate('Authorize/authorize.html.twig');
+        $loader = new FilesystemLoader(__DIR__.'/../../Resources/views');
+        $twig = new Environment($loader);
+        $template = $twig->load('Authorize/authorize.html.twig');
         $html = $template->render($params);
 
-        $this->assertContains(htmlentities(http_build_query($params['qs'])), $html);
+        $this->assertStringContainsString(htmlentities(http_build_query($params['qs'])), $html);
     }
 }

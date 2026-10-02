@@ -2,14 +2,24 @@
 
 namespace OAuth2\ServerBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use OAuth2\ServerBundle\Manager\ClientManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateClientCommand extends ContainerAwareCommand
+class CreateClientCommand extends Command
 {
-    protected function configure()
+    private ClientManager $clientManager;
+
+    public function __construct(ClientManager $clientManager)
+    {
+        parent::__construct();
+
+        $this->clientManager = $clientManager;
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('OAuth2:CreateClient')
@@ -21,13 +31,10 @@ class CreateClientCommand extends ContainerAwareCommand
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $container = $this->getContainer();
-        $clientManager = $container->get('oauth2.client_manager');
-
         try {
-            $client = $clientManager->createClient(
+            $client = $this->clientManager->createClient(
                 $input->getArgument('identifier'),
                 explode(',', $input->getArgument('redirect_uri')),
                 explode(',', $input->getArgument('grant_types')),
@@ -45,5 +52,7 @@ class CreateClientCommand extends ContainerAwareCommand
         }
 
         $output->writeln('<fg=green>Client ' . $input->getArgument('identifier') . ' created with secret ' . $client->getClientSecret() . '</fg=green>');
+
+        return Command::SUCCESS;
     }
 }

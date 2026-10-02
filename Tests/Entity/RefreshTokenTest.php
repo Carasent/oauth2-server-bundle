@@ -5,7 +5,7 @@ namespace OAuth2\ServerBundle\Tests\Entity;
 use OAuth2\ServerBundle\Tests\ContainerLoader;
 use OAuth2\ServerBundle\Entity\RefreshToken;
 
-class RefreshTokenTest extends \PHPUnit_Framework_TestCase
+class RefreshTokenTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {

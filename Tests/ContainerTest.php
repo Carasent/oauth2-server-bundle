@@ -6,7 +6,7 @@ use OAuth2\Request;
 use OAuth2\Response;
 use OAuth2\Server;
 
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends \PHPUnit\Framework\TestCase
 {
     public function testOpenIdConfig()
     {
@@ -24,10 +24,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 </container>
 EOF;
         file_put_contents($tmpFile = tempnam(sys_get_temp_dir(), 'openid-config'), $openIdConfig);
-        $container = ContainerLoader::buildTestContainer(array(
-            __DIR__.'/../vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/config/security.xml',
-            $tmpFile
-        ));
+        $container = ContainerLoader::buildTestContainer(array($tmpFile));
 
         /** @var Server $server */
         $server = $container->get('oauth2.server');
@@ -53,12 +50,16 @@ EOF;
         $server->getStorage('public_key')->keys['public_key'] = file_get_contents(__DIR__.'/../vendor/bshaffer/oauth2-server-php/test/config/keys/id_rsa.pub');
         $server->getStorage('public_key')->keys['private_key'] = file_get_contents(__DIR__.'/../vendor/bshaffer/oauth2-server-php/test/config/keys/id_rsa');
 
+        $codeVerifier = str_repeat('a', 43);
+        $codeChallenge = rtrim(strtr(base64_encode(hash('sha256', $codeVerifier, true)), '+/', '-_'), '=');
         $request = new Request(array(
             'client_id'     => $clientId,
             'redirect_uri'  => 'http://brentertainment.com',
             'response_type' => 'code',
             'scope'         => 'openid',
             'state'         => 'xyz',
+            'code_challenge' => $codeChallenge,
+            'code_challenge_method' => 'S256',
         ));
 
         $response = new Response();
@@ -68,5 +69,7 @@ EOF;
         $code = $server->getStorage('authorization_code')->getAuthorizationCode($query['code']);
 
         $this->assertArrayHasKey('id_token', $code);
+        $this->assertSame($codeChallenge, $code['code_challenge']);
+        $this->assertSame('S256', $code['code_challenge_method']);
     }
 }

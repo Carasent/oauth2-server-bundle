@@ -23,18 +23,17 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $client_secret
      * (optional) If a secret is required, check that they've given the right one.
      *
-     * @return
-     * TRUE if the client credentials are valid, and MUST return FALSE if it isn't.
+     * Returns true when the client credentials are valid.
      * @endcode
      *
      * @see http://tools.ietf.org/html/rfc6749#section-3.1
      *
      * @ingroup oauth2_section_3
      */
-    public function checkClientCredentials($client_id, $client_secret = null)
+    public function checkClientCredentials($client_id, $client_secret = null): bool
     {
         // Get Client
-        $client = $this->em->getRepository('OAuth2ServerBundle:Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         // If client exists check secret
         if ($client) {
@@ -53,10 +52,9 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $client_id
      * Client identifier to be check with.
      *
-     * @return array
-     *               Client details. The only mandatory key in the array is "redirect_uri".
-     *               This function MUST return FALSE if the given client does not exist or is
-     *               invalid. "redirect_uri" can be space-delimited to allow for multiple valid uris.
+     * Client details. The only mandatory key in the array is "redirect_uri".
+     * Returns false if the given client does not exist or is invalid.
+     * "redirect_uri" can be space-delimited to allow for multiple valid URIs.
      * @code
      *               return array(
      *               "redirect_uri" => REDIRECT_URI,      // REQUIRED redirect_uri registered for the client
@@ -67,10 +65,10 @@ class ClientCredentials implements ClientCredentialsInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function getClientDetails($client_id)
+    public function getClientDetails($client_id): array|false
     {
         // Get Client
-        $client = $this->em->getRepository('OAuth2ServerBundle:Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
             return false;
@@ -94,13 +92,11 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $grant_type
      * Grant type to be check with
      *
-     * @return
-     * TRUE if the grant type is supported by this client identifier, and
-     * FALSE if it isn't.
+     * Returns true when the grant type is supported by this client.
      *
      * @ingroup oauth2_section_4
      */
-    public function checkRestrictedGrantType($client_id, $grant_type)
+    public function checkRestrictedGrantType($client_id, $grant_type): bool
     {
         $client = $this->getClientDetails($client_id);
 
@@ -126,8 +122,7 @@ class ClientCredentials implements ClientCredentialsInterface
      * @param $client_id
      * Client identifier to be check with.
      *
-     * @return
-     * TRUE if the client is public, and FALSE if it isn't.
+     * Returns true when the client is public.
      * @endcode
      *
      * @see http://tools.ietf.org/html/rfc6749#section-2.3
@@ -135,9 +130,9 @@ class ClientCredentials implements ClientCredentialsInterface
      *
      * @ingroup oauth2_section_2
      */
-    public function isPublicClient($client_id)
+    public function isPublicClient($client_id): bool
     {
-        $client = $this->em->getRepository('OAuth2ServerBundle:Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
             return false;
@@ -151,13 +146,12 @@ class ClientCredentials implements ClientCredentialsInterface
     /**
      * Get the scope associated with this client
      *
-     * @return
-     * STRING the space-delineated scope list for the specified client_id
+     * Returns false when the client does not exist.
      */
-    public function getClientScope($client_id)
+    public function getClientScope($client_id): string|false
     {
         // Get Client
-        $client = $this->em->getRepository('OAuth2ServerBundle:Client')->find($client_id);
+        $client = $this->em->getRepository(Client::class)->find($client_id);
 
         if (!$client) {
             return false;
