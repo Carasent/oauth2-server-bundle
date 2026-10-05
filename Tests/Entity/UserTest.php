@@ -5,7 +5,7 @@ namespace OAuth2\ServerBundle\Tests\Entity;
 use OAuth2\ServerBundle\Tests\ContainerLoader;
 use OAuth2\ServerBundle\Entity\User;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {

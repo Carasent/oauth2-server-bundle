@@ -8,7 +8,7 @@
         <parameter key="doctrine.db.username">root</parameter>
         <parameter key="doctrine.db.password"></parameter>
         <parameter key="doctrine.db.dbname">oauth2_server_bundle</parameter>
-        <parameter key="doctrine.db.host">localhost</parameter>
+        <parameter key="doctrine.db.host">database</parameter>
         <parameter key="doctrine.config_paths" type="collection">
             <parameter key="%bundle_root_dir%/Resources/config/doctrine">OAuth2\ServerBundle\Entity</parameter>
         </parameter>
@@ -39,6 +39,9 @@
         </service>
         <service id="doctrine.entity_manager.driver.yaml" class="Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver">
             <argument>%doctrine.config_paths%</argument>
+        </service>
+        <service id="security.encoder_factory" class="Symfony\Component\Security\Core\Encoder\EncoderFactory">
+            <argument type="collection" />
         </service>
     </services>
 </container>

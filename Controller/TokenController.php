@@ -2,11 +2,43 @@
 
 namespace OAuth2\ServerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use OAuth2\GrantType\AuthorizationCode;
+use OAuth2\GrantType\ClientCredentials;
+use OAuth2\GrantType\RefreshToken;
+use OAuth2\GrantType\UserCredentials;
+use OAuth2\HttpFoundationBridge\Request;
+use OAuth2\HttpFoundationBridge\Response;
+use OAuth2\Server;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class TokenController extends Controller
+class TokenController
 {
+    private $server;
+    private $clientCredentialsGrant;
+    private $authorizationCodeGrant;
+    private $refreshTokenGrant;
+    private $userCredentialsGrant;
+    private $request;
+    private $response;
+
+    public function __construct(
+        Server $server,
+        ClientCredentials $clientCredentialsGrant,
+        AuthorizationCode $authorizationCodeGrant,
+        RefreshToken $refreshTokenGrant,
+        UserCredentials $userCredentialsGrant,
+        Request $request,
+        Response $response
+    ) {
+        $this->server = $server;
+        $this->clientCredentialsGrant = $clientCredentialsGrant;
+        $this->authorizationCodeGrant = $authorizationCodeGrant;
+        $this->refreshTokenGrant = $refreshTokenGrant;
+        $this->userCredentialsGrant = $userCredentialsGrant;
+        $this->request = $request;
+        $this->response = $response;
+    }
+
     /**
      * This is called by the client app once the client has obtained
      * an authorization code from the Authorize Controller (@see OAuth2\ServerBundle\Controller\AuthorizeController).
@@ -15,16 +47,14 @@ class TokenController extends Controller
      *
      * @Route("/token", name="_token")
      */
-    public function tokenAction()
+    public function tokenAction(): Response
     {
-        $server = $this->get('oauth2.server');
-
         // Add Grant Types
-        $server->addGrantType($this->get('oauth2.grant_type.client_credentials'));
-        $server->addGrantType($this->get('oauth2.grant_type.authorization_code'));
-        $server->addGrantType($this->get('oauth2.grant_type.refresh_token'));
-        $server->addGrantType($this->get('oauth2.grant_type.user_credentials'));
+        $this->server->addGrantType($this->clientCredentialsGrant);
+        $this->server->addGrantType($this->authorizationCodeGrant);
+        $this->server->addGrantType($this->refreshTokenGrant);
+        $this->server->addGrantType($this->userCredentialsGrant);
 
-        return $server->handleTokenRequest($this->get('oauth2.request'), $this->get('oauth2.response'));
+        return $this->server->handleTokenRequest($this->request, $this->response);
     }
 }

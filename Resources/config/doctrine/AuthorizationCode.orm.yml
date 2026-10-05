@@ -22,6 +22,14 @@ OAuth2\ServerBundle\Entity\AuthorizationCode:
             type:       string
             length:     2000
             nullable:   true
+        code_challenge:
+            type:       string
+            length:     255
+            nullable:   true
+        code_challenge_method:
+            type:       string
+            length:     10
+            nullable:   true
     manyToOne:
       client:
         targetEntity: OAuth2\ServerBundle\Entity\Client

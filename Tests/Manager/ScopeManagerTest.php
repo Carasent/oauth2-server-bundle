@@ -5,7 +5,7 @@ namespace OAuth2\ServerBundle\Tests\Entity;
 use OAuth2\ServerBundle\Manager\ScopeManager;
 use OAuth2\ServerBundle\Tests\ContainerLoader;
 
-class ScopeManagerTest extends \PHPUnit_Framework_TestCase
+class ScopeManagerTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindScopesByScopes()
     {
