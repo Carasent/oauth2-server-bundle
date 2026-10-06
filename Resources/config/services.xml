@@ -28,6 +28,7 @@
             <argument type="service" id="oauth2.request"/>
             <argument type="service" id="oauth2.response"/>
             <argument type="service" id="oauth2.storage.scope"/>
+            <argument type="service" id="twig"/>
             <tag name="controller.service_arguments"/>
         </service>
         <service id="OAuth2\ServerBundle\Controller\TokenController" public="true">

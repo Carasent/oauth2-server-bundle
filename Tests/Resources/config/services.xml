@@ -14,6 +14,16 @@
         </parameter>
     </parameters>
     <services>
+        <service id="twig.loader" class="Twig\Loader\FilesystemLoader">
+            <argument>%bundle_root_dir%/Resources/views</argument>
+            <call method="addPath">
+                <argument>%bundle_root_dir%/Resources/views</argument>
+                <argument>OAuth2Server</argument>
+            </call>
+        </service>
+        <service id="twig" class="Twig\Environment">
+            <argument type="service" id="twig.loader"/>
+        </service>
         <service id="doctrine.orm.entity_manager" class="Doctrine\ORM\EntityManager">
             <factory class="Doctrine\ORM\EntityManager" method="create" />
             <argument type="collection">

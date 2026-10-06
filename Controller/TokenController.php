@@ -9,7 +9,7 @@ use OAuth2\GrantType\UserCredentials;
 use OAuth2\HttpFoundationBridge\Request;
 use OAuth2\HttpFoundationBridge\Response;
 use OAuth2\Server;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TokenController
 {
@@ -39,13 +39,13 @@ class TokenController
         $this->response = $response;
     }
 
+    #[Route('/token', name: '_token')]
     /**
      * This is called by the client app once the client has obtained
      * an authorization code from the Authorize Controller (@see OAuth2\ServerBundle\Controller\AuthorizeController).
      * returns a JSON-encoded Access Token or a JSON object with
      * "error" and "error_description" properties.
      *
-     * @Route("/token", name="_token")
      */
     public function tokenAction(): Response
     {
